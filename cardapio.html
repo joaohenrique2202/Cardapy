@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio</title>
+    <link rel="stylesheet" href="cardapio.css">
+</head>
+<body>
+
+<header>
+    <div class="restaurant">
+        <div class="restaurant-avatar" id="avatar"></div>
+
+        <div>
+            <h1 id="nomeRestaurante">Restaurante</h1>
+            <small>Cardápio digital</small>
+        </div>
+    </div>
+
+    <button class="cart-button" onclick="abrirCarrinho()">
+        🛒 <span id="qtdCarrinho">0</span>
+    </button>
+</header>
+
+<main>
+    <input
+        class="search"
+        id="busca"
+        placeholder=" Buscar no cardápio"
+        oninput="render()"
+    >
+
+    <div id="categorias" class="categories"></div>
+
+    <div id="cardapio"></div>
+</main>
+
+<div class="modal" id="modalCarrinho">
+    <div class="box">
+        <button class="close" onclick="fecharCarrinho()">×</button>
+
+        <h2>Seu pedido</h2>
+
+        <div id="itensCarrinho"></div>
+
+        <div class="cart-total">
+            <span>Total</span>
+            <b id="totalCarrinho">R$ 0,00</b>
+        </div>
+
+        <button class="primary" onclick="abrirFinalizar()">
+            Finalizar pedido
+        </button>
+    </div>
+</div>
+
+<div class="modal" id="modalFinalizar">
+    <div class="box">
+        <button class="close" onclick="fecharFinalizar()">×</button>
+
+        <h2>Finalizar pedido</h2>
+        <p>Preencha seus dados para entrega.</p>
+
+        <form id="checkout">
+            <input id="clienteNome" placeholder="Seu nome" required>
+            <input id="clienteTelefone" type="tel" placeholder="WhatsApp" required>
+
+            <h3>📍 Endereço de entrega</h3>
+
+            <div class="grid">
+                <input id="clienteNumero" placeholder="Número" required>
+            </div>
+
+            <input id="clienteRua" placeholder="Rua" required>
+            <input id="clienteBairro" placeholder="Bairro" required>
+
+            <div class="grid">
+                <input id="clienteEstado" placeholder="UF" maxlength="2" required>
+            </div>
+
+            <input id="clienteComplemento" placeholder="Complemento (opcional)">
+
+            <textarea id="clienteObservacao" placeholder="Observação do pedido"></textarea>
+
+            <div class="checkout-total">
+                Total: <b id="checkoutTotal">R$ 0,00</b>
+            </div>
+
+            <button class="primary" type="submit">Enviar pedido</button>
+        </form>
+    </div>
+</div>
+
+<script src="cardapio.js"></script>
+</body>
+</html>

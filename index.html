@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardápioMais</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="brand">
+        <div class="brand-logo">CM</div>
+        <strong>Cardápio<span>Mais</span></strong>
+    </div>
+
+    <div class="header-actions">
+        <button class="btn-outline" onclick="abrirLogin()">Já tenho uma conta</button>
+        <button class="btn-primary" onclick="abrirCadastro()">Criar meu cardapio</button>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero-content">
+            <span class="eyebrow">CARDÁPIO DIGITAL</span>
+            <h1>Seu restaurante na palma da mão.</h1>
+            <p>Crie seu cardápio digital, receba pedidos e organize seu restaurante de forma simples.</p>
+            <button class="btn-primary btn-large" onclick="abrirCadastro()">Criar meu cardápio grátis</button>
+        </div>
+
+        <div class="preview">
+            <div class="preview-top">
+                <span>🍔</span>
+                <strong>Seu Cardápio</strong>
+            </div>
+
+            <div class="preview-item">
+                <div>🍔</div>
+                <span>X-Burger<small>Hambúrguer artesanal</small></span>
+                <b>R$ 18,00</b>
+            </div>
+
+            <div class="preview-item">
+                <div>🍕</div>
+                <span>Pizza Calabresa<small>Molho, queijo e calabresa</small></span>
+                <b>R$ 35,00</b>
+            </div>
+
+            <div class="preview-item">
+                <div>🥤</div>
+                <span>Refrigerante<small>Lata 350ml</small></span>
+                <b>R$ 6,00</b>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div>
+            <span>📱</span>
+            <h3>Cardápio digital</h3>
+            <p>Seus clientes acessam pelo celular.</p>
+        </div>
+
+        <div>
+            <span>📦</span>
+            <h3>Receba pedidos</h3>
+            <p>Veja os pedidos diretamente no painel.</p>
+        </div>
+
+        <div>
+            <span>💰</span>
+            <h3>Sem comissão</h3>
+            <p>Você recebe o valor do pedido.</p>
+        </div>
+    </section>
+</main>
+
+<div class="modal" id="modalCadastro">
+    <div class="modal-box">
+        <button class="close" onclick="fecharCadastro()">×</button>
+
+        <h2>Criar conta</h2>
+        <p>Cadastre seu estabelecimento.</p>
+
+        <form id="formCadastro">
+            <input id="estabelecimento" placeholder="Nome do estabelecimento" required>
+            <input id="nome" placeholder="Nome do responsável" required>
+            <input id="email" type="email" placeholder="E-mail" required>
+            <input id="telefone" type="tel" placeholder="WhatsApp" required>
+
+            <h3>📍 Endereço do restaurante</h3>
+
+            <div class="grid2">
+                <input id="cep" placeholder="CEP" required>
+                <input id="numero" placeholder="Número" required>
+            </div>
+
+            <input id="rua" placeholder="Rua" required>
+            <input id="bairro" placeholder="Bairro" required>
+
+            <div class="grid2">
+                <input id="cidade" placeholder="Cidade" required>
+                <input id="estado" placeholder="UF" maxlength="2" required>
+            </div>
+
+            <input id="complemento" placeholder="Complemento (opcional)">
+            <input id="senha" type="password" placeholder="Senha" required>
+
+            <button class="btn-primary full" type="submit">Criar conta</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="modalLogin">
+    <div class="modal-box">
+        <button class="close" onclick="fecharLogin()">×</button>
+
+        <h2>Entrar</h2>
+        <p>Acesse seu painel.</p>
+
+        <form id="formLogin">
+            <input id="loginEmail" type="email" placeholder="E-mail" required>
+            <input id="loginSenha" type="password" placeholder="Senha" required>
+
+            <button class="btn-primary full" type="submit">Entrar</button>
+        </form>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+    

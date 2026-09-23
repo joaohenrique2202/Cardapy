@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel - CardápioMais</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">CM</div>
+        <h2>Cardápio<span>Mais</span></h2>
+
+        <div class="rest">
+            <div id="avatar">R</div>
+            <div>
+                <b id="restNome">Restaurante</b>
+                <small>Painel</small>
+            </div>
+        </div>
+
+        <nav>
+            <button class="nav ativo" data-secao="inicio" onclick="mostrarSecao('inicio', this)">📊 Visão geral</button>
+            <button class="nav" data-secao="produtos" onclick="mostrarSecao('produtos', this)">🍔 Produtos</button>
+            <button class="nav" data-secao="pedidos" onclick="mostrarSecao('pedidos', this)">📦 Pedidos <i
+                    id="badge">0</i></button>
+            <button class="nav" data-secao="cardapio" onclick="mostrarSecao('cardapio', this)">📱 Meu cardápio</button>
+            <button class="nav" data-secao="configuracoes" onclick="mostrarSecao('configuracoes', this)">⚙️
+                Configurações</button>
+        </nav>
+
+        <button class="sair" onclick="window.location.href='index.html'">🚪 Sair</button>
+    </aside>
+
+    <main class="main">
+
+        <section id="inicio" class="secao ativo">
+            <div class="top">
+                <div>
+                    <small>PAINEL</small>
+                    <h1>Visão geral</h1>
+                    <p>Acompanhe seus pedidos e produtos.</p>
+                </div>
+                <button onclick="atualizarTudo()">↻ Atualizar</button>
+            </div>
+
+            <div class="stats">
+                <div>📦 <span>Pedidos<strong id="totalPedidos">0</strong></span></div>
+                <div>💰 <span>Valor dos pedidos<strong id="totalVendas">R$ 0,00</strong></span></div>
+                <div>🍔 <span>Produtos<strong id="totalProdutos">0</strong></span></div>
+                <div>👥 <span>Clientes<strong id="totalClientes">0</strong></span></div>
+            </div>
+
+            <div class="panel">
+                <h2>Pedidos recentes</h2>
+                <div id="recentes"></div>
+            </div>
+        </section>
+
+        <section id="produtos" class="secao">
+            <div class="top">
+                <div>
+                    <small>GERENCIAMENTO</small>
+                    <h1>Produtos</h1>
+                </div>
+                <button class="primary" onclick="abrirModalProduto()">+ Adicionar produto</button>
+            </div>
+
+            <div class="filters">
+                <input id="busca" placeholder=" Buscar produto" oninput="renderProdutos()">
+                <select id="categoria" onchange="renderProdutos()">
+                    <option value="todas">Todas as categorias</option>
+                </select>
+            </div>
+
+            <div id="listaProdutos" class="products"></div>
+        </section>
+
+        <section id="pedidos" class="secao">
+            <div class="top">
+                <div>
+                    <small>VENDAS</small>
+                    <h1>Pedidos</h1>
+                    <p>Pedidos recebidos pelos clientes.</p>
+                </div>
+                <button onclick="renderPedidos()">↻ Atualizar pedidos</button>
+            </div>
+
+            <div class="order-filters">
+                <button class="active" onclick="filtrar('todos', this)">Todos</button>
+                <button onclick="filtrar('aguardando_pagamento', this)">Aguardando pagamento</button>
+                <button onclick="filtrar('novo', this)">Novos</button>
+                <button onclick="filtrar('em_preparo', this)">Em preparo</button>
+                <button onclick="filtrar('pronto', this)">Prontos</button>
+                <button onclick="filtrar('entregue', this)">Entregues</button>
+                <button onclick="filtrar('cancelado', this)">Cancelados</button>
+            </div>
+
+            <div id="listaPedidos"></div>
+        </section>
+
+        <section id="cardapio" class="secao">
+            <div class="top">
+                <div>
+                    <small>ENDEREÇO DIGITAL</small>
+                    <h1>Meu cardápio</h1>
+                </div>
+            </div>
+
+            <div class="panel center">
+                <div class="big">📱</div>
+                <p>Compartilhe seu cardápio com seus clientes.</p>
+
+                <div class="link">
+                    <span id="linkCardapio">cardapio.html</span>
+                    <button onclick="copiarLink()">Copiar</button>
+                </div>
+
+                <button class="primary" onclick="window.open('cardapio.html', '_blank')">
+                    Abrir cardápio
+                </button>
+            </div>
+        </section>
+
+        <section id="configuracoes" class="secao">
+            <div class="top">
+                <div>
+                    <small>CONTA</small>
+                    <h1>Configurações</h1>
+                </div>
+            </div>
+
+            <div class="panel config">
+                <p>Estabelecimento<strong id="cEstabelecimento"></strong></p>
+                <p>Responsável<strong id="cNome"></strong></p>
+                <p>E-mail<strong id="cEmail"></strong></p>
+                <p>WhatsApp<strong id="cTelefone"></strong></p>
+                <p>📍 Endereço<strong id="cEndereco"></strong></p>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="modal" id="modalProduto">
+        <div class="modal-box">
+            <button class="close" onclick="fecharModalProduto()">×</button>
+
+            <h2>Adicionar produto</h2>
+
+            <form id="formProduto">
+                <input id="pNome" placeholder="Nome do produto" required>
+                <textarea id="pDescricao" placeholder="Descrição"></textarea>
+
+                <div class="grid">
+                    <input id="pPreco" type="number" step="0.01" min="0" placeholder="Preço" required>
+                    <input id="pCategoria" placeholder="Categoria" required>
+                </div>
+
+                <input id="pImagem" type="file" accept="image/*">
+
+                <div id="preview"></div>
+
+                <button class="primary" type="submit">Salvar produto</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
