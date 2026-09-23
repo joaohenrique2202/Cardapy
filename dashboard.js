@@ -7,6 +7,7 @@ if (!usuario) {
 let produtos = JSON.parse(localStorage.getItem("produtos") || "[]");
 let pedidos = JSON.parse(localStorage.getItem("pedidos") || "[]");
 let filtroPedidoAtual = "todos";
+let produtoEditandoId = null;
 
 document.addEventListener("DOMContentLoaded", function() {
     carregarUsuario();
@@ -74,6 +75,9 @@ function atualizarTudo() {
 }
 
 function abrirModalProduto() {
+    produtoEditandoId = null;
+    document.getElementById("tituloModalProduto").textContent = "Adicionar produto";
+    document.getElementById("botaoSalvarProduto").textContent = "Salvar produto";
     document.getElementById("modalProduto").classList.add("ativo");
 }
 
@@ -81,6 +85,28 @@ function fecharModalProduto() {
     document.getElementById("modalProduto").classList.remove("ativo");
     document.getElementById("formProduto").reset();
     document.getElementById("preview").innerHTML = "";
+    produtoEditandoId = null;
+}
+
+function editarProduto(id) {
+    const produto = produtos.find(item => item.id === id);
+
+    if (!produto) return;
+
+    produtoEditandoId = id;
+    document.getElementById("tituloModalProduto").textContent = "Editar produto";
+    document.getElementById("botaoSalvarProduto").textContent = "Salvar alterações";
+    document.getElementById("pNome").value = produto.nome || "";
+    document.getElementById("pDescricao").value = produto.descricao || "";
+    document.getElementById("pPreco").value = produto.preco ?? "";
+    document.getElementById("pCategoria").value = produto.categoria || "";
+
+    const preview = document.getElementById("preview");
+    preview.innerHTML = produto.imagem
+        ? `<img src="${produto.imagem}" alt="Imagem atual" style="width: 100%; max-height: 180px; object-fit: cover; border-radius: 10px;">`
+        : "";
+
+    document.getElementById("modalProduto").classList.add("ativo");
 }
 
 document.getElementById("pImagem").addEventListener("change", function() {
@@ -107,26 +133,33 @@ document.getElementById("formProduto").addEventListener("submit", function(event
     const arquivo = document.getElementById("pImagem").files[0];
 
     const salvarProduto = function(imagem = "") {
-        const produto = {
-            id: Date.now(),
+        const produtoAtual = produtos.find(item => item.id === produtoEditandoId);
+        const dadosProduto = {
             nome: document.getElementById("pNome").value.trim(),
             descricao: document.getElementById("pDescricao").value.trim(),
             preco: Number(document.getElementById("pPreco").value),
             categoria: document.getElementById("pCategoria").value.trim(),
-            imagem: imagem
+            imagem: imagem || produtoAtual?.imagem || ""
         };
 
-        produtos.push(produto);
+        if (produtoAtual) {
+            produtos = produtos.map(item =>
+                item.id === produtoEditandoId ? { ...item, ...dadosProduto } : item
+            );
+        } else {
+            produtos.push({ id: Date.now(), ...dadosProduto });
+        }
+
         localStorage.setItem("produtos", JSON.stringify(produtos));
 
-        alert("Produto adicionado com sucesso!");
+        alert(produtoAtual ? "Produto atualizado com sucesso!" : "Produto adicionado com sucesso!");
 
         fecharModalProduto();
         atualizarTudo();
     };
 
     if (!arquivo) {
-        salvarProduto("");
+        salvarProduto();
         return;
     }
 
@@ -182,9 +215,23 @@ function renderProdutos() {
                 <h3>${produto.nome}</h3>
                 <p>${produto.descricao || "Sem descrição."}</p>
                 <strong class="price">${formatarMoeda(produto.preco)}</strong>
+                <button class="edit-product" onclick="editarProduto(${produto.id})">Editar produto</button>
+                <button class="remove-product" onclick="removerProduto(${produto.id})">Remover produto</button>
             </div>
         </article>
     `).join("");
+}
+
+function removerProduto(id) {
+    const produto = produtos.find(item => item.id === id);
+
+    if (!produto || !confirm(`Deseja remover o produto "${produto.nome}"?`)) {
+        return;
+    }
+
+    produtos = produtos.filter(item => item.id !== id);
+    localStorage.setItem("produtos", JSON.stringify(produtos));
+    atualizarTudo();
 }
 
 function preencherCategorias() {

@@ -288,6 +288,37 @@ select:focus {
     font-size: 18px;
 }
 
+.edit-product,
+.remove-product {
+    width: 100%;
+    margin-top: 16px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.edit-product {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1d4ed8;
+}
+
+.edit-product:hover {
+    background: #dbeafe;
+}
+
+.remove-product {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    border-radius: 8px;
+    color: #be123c;
+    cursor: pointer;
+}
+
+.remove-product:hover {
+    background: #ffe4e6;
+}
+
 .order-filters {
     display: flex;
     flex-wrap: wrap;
