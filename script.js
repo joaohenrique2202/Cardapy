@@ -1,7 +1,16 @@
 const modalCadastro = document.getElementById("modalCadastro");
 const modalLogin = document.getElementById("modalLogin");
+const camposSenha = [document.getElementById("senha"), document.getElementById("loginSenha")];
+
+camposSenha.forEach(function(campo) {
+    campo.addEventListener("focus", function() {
+        campo.removeAttribute("readonly");
+    });
+});
 
 function abrirCadastro() {
+    document.getElementById("senha").value = "";
+    document.getElementById("senha").setAttribute("readonly", "readonly");
     modalCadastro.classList.add("ativo");
 }
 
@@ -10,6 +19,8 @@ function fecharCadastro() {
 }
 
 function abrirLogin() {
+    document.getElementById("loginSenha").value = "";
+    document.getElementById("loginSenha").setAttribute("readonly", "readonly");
     modalLogin.classList.add("ativo");
 }
 

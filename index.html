@@ -83,10 +83,10 @@
         <h2>Criar conta</h2>
         <p>Cadastre seu estabelecimento.</p>
 
-        <form id="formCadastro">
-            <input id="estabelecimento" placeholder="Nome do estabelecimento" required>
-            <input id="nome" placeholder="Nome do responsável" required>
-            <input id="email" type="email" placeholder="E-mail" required>
+        <form id="formCadastro" autocomplete="off">
+            <input id="estabelecimento" placeholder="Nome do estabelecimento" autocomplete="organization" required>
+            <input id="nome" placeholder="Nome do responsável" autocomplete="name" required>
+            <input id="email" type="email" placeholder="E-mail" autocomplete="email" required>
             <input id="telefone" type="tel" placeholder="WhatsApp" required>
 
             <h3>📍 Endereço do restaurante</h3>
@@ -105,7 +105,7 @@
             </div>
 
             <input id="complemento" placeholder="Complemento (opcional)">
-            <input id="senha" type="password" placeholder="Senha" required>
+            <input id="senha" type="password" placeholder="Senha" autocomplete="new-password" readonly required>
 
             <button class="btn-primary full" type="submit">Criar conta</button>
         </form>
@@ -119,9 +119,9 @@
         <h2>Entrar</h2>
         <p>Acesse seu painel.</p>
 
-        <form id="formLogin">
-            <input id="loginEmail" type="email" placeholder="E-mail" required>
-            <input id="loginSenha" type="password" placeholder="Senha" required>
+        <form id="formLogin" autocomplete="on">
+            <input id="loginEmail" type="email" placeholder="E-mail" autocomplete="username" required>
+            <input id="loginSenha" type="password" placeholder="Senha" autocomplete="new-password" readonly required>
 
             <button class="btn-primary full" type="submit">Entrar</button>
         </form>
