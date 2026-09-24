@@ -15,6 +15,22 @@ document.addEventListener("DOMContentLoaded", function() {
     mostrarSecao("inicio", document.querySelector(".nav"));
 });
 
+window.addEventListener("storage", function(event) {
+    if (event.key !== "pedidos") return;
+
+    const pedidosAnteriores = pedidos.length;
+    pedidos = JSON.parse(event.newValue || "[]");
+
+    renderPedidos();
+    atualizarResumo();
+
+    if (pedidos.length > pedidosAnteriores) {
+        const pedido = pedidos[pedidos.length - 1];
+        alert(`Novo pedido recebido de ${pedido.cliente?.nome || "um cliente"}!`);
+        mostrarSecao("pedidos");
+    }
+});
+
 function carregarUsuario() {
     document.getElementById("restNome").textContent = usuario.estabelecimento;
     document.getElementById("avatar").textContent = usuario.estabelecimento.charAt(0).toUpperCase();
